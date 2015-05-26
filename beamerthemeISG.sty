@@ -2,8 +2,9 @@
 %
 % Changelog
 % 26/05/2015 - Version 1.5.0 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - incorporated the colours from the ISGCommon style file in order to merge the two into one file.
-% 26/05/2015 - Version 1.4.2 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - added an option to use one of the two footers provided.  Improved the colouring of the presentation
-% 26/05/2015 - Version 1.4.1 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - cleared up some dead code, changed some colours.  The Github update.
+% 26/05/2015 - Version 1.4.3 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - added an option to use one of the two footers provided.  Improved the colouring of the presentation
+% 26/05/2015 - Version 1.4.2 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - cleared up some dead code, changed some colours.  The Github update.
+% 25/05/2015 - Version 1.4.1 by Dan Hutchinson <dojh342@gmail.com> - Fixed the logo position with tikz
 % 06/05/2015 - Version 1.4.0 by Dan Hutchinson <dojh342@gmail.com> - Set sections in header at max 3 & title page logo hack fix.
 % 25/11/2014 - Version 1.3.1 by Dan Hutchinson <dojh342@gmail.com> - small changes
 % 10/11/2014 - Version 1.3.0 by Dan Hutchinson <dojh342@gmail.com> - fixed bibliography parts use: \begin{frame}[t,allowframebreaks]\frametitle{References}
@@ -52,11 +53,6 @@
 %%%%%%%%%%%%%%
 % PARAMETERS %
 %%%%%%%%%%%%%%
-
-%%%WANT BIG logo for the title page!
-\newif\ifdisplaylogo
-\DeclareOption{displaylogo}{\displaylogotrue}
-\DeclareOption{nologo}{\displaylogofalse}
 
 % Toggle footer
 \newif\ifdisplaysplitfooter
@@ -129,11 +125,6 @@
   {\includegraphics[width=\paperwidth]{graphics/beamer-style/titlepagelogo.jpg}};                
 \end{tikzpicture}%
 }{}
-
-\ifdisplaylogo
-	\logo{\includegraphics[width=0.32\paperwidth]{graphics/general/isg-logo.png}\hspace*{0.1cm}}
-\fi
-
 
 % Footer
 \ifdisplaysinglefooter
