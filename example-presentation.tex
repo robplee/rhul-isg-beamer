@@ -1,65 +1,50 @@
 \documentclass{beamer}
 
-\usetheme[displayfooter]{ISGDan}%displaytocsubsection
-\usepackage{amsthm}
+\usetheme[]{ISG}
+%\usepackage{amsthm}
+%\usepackage{xpatch}
+%\usepackage{caption}
 
-%%%Packages
-%\usepackage{Beamer}
-\usepackage{xpatch}
-\usepackage{caption}
+%\hypersetup{pdfpagemode=FullScreen}
 
-\hypersetup{pdfpagemode=FullScreen}
-
-%%%---------------------------------------------------------------------
-\begin{document}
-
-%\setbeamertemplate{title page}[default][colsep=-0bp,rounded=false]
-%\setbeamertemplate{frametitle}[default][colsep=-4bp,rounded=false,shadow=false]
-%\setbeamertemplate{framesubtitle}{shadow=false}
-%\setbeamertemplate{blocks}[rounded][shadow=false]
-%\setbeamertemplate{headline}[shadow=false]
-%\setbeamertemplate{subsection in head}[shadow=false]
-%\setbeamertemplate{section in head}[shadow=false]
-%\setbeamertemplate{beamercolorbox}[shadow=false]
-
-\title{Thought inspiring title}
-\subtitle{More accurate and honest subtitle}  
-\author{Fantastic academic}
+\title{Example Beamer Presentation\\title second line}
+\subtitle{A Demonstration of the ISG Beamer Template}  
+\author[R. Lee \& D. Hutchinson]{Robert Lee and Daniel Hutchinson}
 \institute{Information Security Group,\\
 Royal Holloway}
-%\date{}
-\section{Introduction}\subsection{}%If no section is put in the title page the sections in the titlepage header will not behave.
+
+\begin{document}
 \begin{frame}
 \titlepage
 \end{frame}
-\setcounter{framenumber}{0}%Because title pages don't count.
+\section{Introduction}
 
-\begin{frame}\frametitle{ToC}
+
+\begin{frame}\frametitle{Presentation Contents}
 \tableofcontents
 \end{frame}
 
 \setbeamercovered{invisible}
-\section{Two ways to cover}\subsection{Invisible covering}
-\begin{frame}\frametitle{I'm a frame title!}
+\section{Two ways to cover}
+\begin{frame}\frametitle{Invisible Covering}
 \begin{itemize}
 \item{I'm the first item!}
 \pause
 \item{I was invisible!}
+\pause
+\item Invisible is selected by \texttt{\\setbeamercovered\{invisible\}}
 \end{itemize}
 \end{frame}
 
+
 \setbeamercovered{transparent}
-\subsection{Transparent covering}
-\begin{frame}\frametitle{I'm a frame title!}
+\begin{frame}\frametitle{Transparent covering}
 \begin{itemize}
 \item{I'm the first item!}
-\vfill
 \pause
 \item{I was transparent!}
-\vfill
 \pause
-\item{\cite{songs} is an interesting read.}
-\vfill
+\item Transparent is selected by \texttt{\\setbeamercovered\{transparent\}}
 \end{itemize}
 \end{frame}
 

@@ -1,6 +1,7 @@
 % The ISGMadrid theme is derived from the Madrid theme.
 %
 % Changelog
+% 26/05/2015 - Version 1.4.2 by Robert Lee <robert.lee.2013@live.rhul.ac.uk - added an option to use one of the two footers provided.  Improved the colouring of the presentation
 % 26/05/2015 - Version 1.4.1 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - cleared up some dead code, changed some colours.  The Github update.
 % 06/05/2015 - Version 1.4.0 by Dan Hutchinson <dojh342@gmail.com> - Set sections in header at max 3 & title page logo hack fix.
 % 25/11/2014 - Version 1.3.1 by Dan Hutchinson <dojh342@gmail.com> - small changes
@@ -20,10 +21,8 @@
 \usepackage{tikz}%Needed for the titlepage logo
 %\RequirePackage{textpos}%Not entirely sure what this is yet but we may need it..
 
-\usetheme{split}
 \useoutertheme{smoothbars}
 \useinnertheme{rectangles}
-%\usecolortheme{whale}
 
 %%%%%%%%%%%%%%
 % PARAMETERS %
@@ -35,9 +34,13 @@
 \DeclareOption{nologo}{\displaylogofalse}
 
 % Toggle footer
-\newif\ifdisplayfooter
-\DeclareOption{displayfooter}{\displayfootertrue}
-\DeclareOption{nodisplayfooter}{\displayfooterfalse}
+\newif\ifdisplaysplitfooter
+\DeclareOption{displaysplitfooter}{\displaysplitfootertrue}
+%\DeclareOption{nodisplayfooter}{\displaysplitfooterfalse}
+
+\newif\ifdisplaysinglefooter
+\DeclareOption{displaysinglefooter}{\displaysinglefootertrue}
+%\DeclareOption{nodisplayfooter}{\displaysinglefooterfalse}
 
 % Toggle TOC at every section
 \newif\ifdisplaytocsection
@@ -54,53 +57,50 @@
 \DeclareOption{smoothbar}{\displaysmoothbartrue}
 \DeclareOption{nosmoothbar}{\displaysmoothbarfalse}
 
-\ProcessOptions
+\ExecuteOptions{displaysinglefooter} %the default footer is the single coloured footer.
+
+\ProcessOptions\relax
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Theme specific settings %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{navigation symbols}{} %remove navigation buttons
-%\addtobeamertemplate{footer}{}{%insert page numbers
-%    \usebeamerfont{footline}%
-%    \usebeamercolor[fg]{footline}%
-%    \hspace{1em}%
-%    \insertframenumber/\inserttotalframenumber
-%}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefining Title Page %
 %%%%%%%%%%%%%%%%%%%%%%%%%
-\defbeamertemplate*{title page}{ISG}
+%\setbeamercolor*{date}{fg=rhulorange}
+%\setbeamercolor{date}{fg=rhulorange}
+
+\defbeamertemplate{title page}{ISG}
 %\addtobeamertemplate{title page}{ISG}
 {%
 	\begin{center}
-	%\vspace{-1cm}
-%\vfill
-  		\usebeamerfont{title}\textbf{\color{rhulorange}{\inserttitle}}\par
-  		\usebeamerfont{subtitle}\color{black}\insertsubtitle\par
-%  		\vspace{16pt}
-\vfill
-  		\usebeamerfont{author}\insertauthor\par
-%  		\vspace{12pt}
-\vfill
- 		\usebeamerfont{institute}\insertinstitute\par
-% 		\vspace{12pt}
-\vfill
-  		\usebeamerfont{date}\color{rhulorange}{\insertdate}
-%		\vspace*{30pt}
+  		\usebeamerfont{title}\inserttitle\par
+		\usebeamerfont{subtitle}\insertsubtitle
+		\vfill
+  		\usebeamerfont{author}\insertauthor
+		\vfill
+ 		\usebeamerfont{institute}\insertinstitute
+		\vfill
+  		\usebeamerfont{date}\insertdate
     \end{center}
-    		\vfill
-%		\megavfill
+    	\vfill
+		\vfill
+		\vfill
+%\megavfill
 %\hspace{-1cm}\includegraphics[width=1\paperwidth]{graphics/general/newtitlepagelogo.jpg}
 %\vspace{-4.5pt}
 }
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Applying the parameters defined above %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \addtobeamertemplate{title page}{%Ideally the shifts would depend on the size of the footer..\footerheight?
 \begin{tikzpicture}[remember picture,overlay] 
-  \node [xshift=0cm,yshift=1.08cm] at (current page.south)
+  \node [xshift=0cm,yshift=1.075cm] at (current page.south) %place the logo bar just above the footer
   {\includegraphics[width=\paperwidth]{graphics/beamer-style/titlepagelogo.jpg}};                
 \end{tikzpicture}%
 }{}
@@ -111,23 +111,32 @@
 
 
 % Footer
-%\ifdisplayfooter
-%	\setbeamercolor*{footlinecolor}{fg=rhulorange,bg=rhulorange}
-%\setbeamertemplate{footline}{%
-%  \begin{beamercolorbox}[sep=0.1cm,wd=\paperwidth,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor}
-%	\tinycolouredline{structure}
-%	\usefoottemplate{\vbox{%
-%	  {\color{white}\insertshorttitle \hskip 5pt -- \insertshortauthor \hfill \insertframenumber / 	\inserttotalframenumber}
-%	  \end{beamercolorbox}}%}
-%\fi
+\ifdisplaysinglefooter
+	\setbeamercolor*{footlinecolor}{fg=rhulorange,bg=rhulorange}
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[sep=0.07cm,wd=\paperwidth,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor}
+	  {\color{white}\insertshorttitle\ --\ \insertshortauthor \hfill \insertframenumber/\inserttotalframenumber}
+	  \end{beamercolorbox}}%}
+\fi
 
-%    \includegraphics[scale=0.07,height=10pt]{images/image1.png}
-%    \hspace{0.3cm}%
-%    \scriptsize{Seite \insertframenumber}
-%    \hfill
-%    \includegraphics[scale=0.25,height=10pt]{images/image2.png}
-%
-%}
+\ifdisplaysplitfooter
+\setbeamertemplate{footline}{%
+    \hbox{\begin{beamercolorbox}[wd=0.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=0.5cm,rightskip=0.5cm]{author in head/foot}%
+      \hfill \insertshortauthor
+    \end{beamercolorbox}%
+	%\hspace{-3pt}
+    \begin{beamercolorbox}[wd=0.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=0.5cm,rightskip=0.5cm]{title in head/foot}%
+      \usebeamerfont{title in head/foot}\insertshorttitle \hfill \insertframenumber/\inserttotalframenumber
+    \end{beamercolorbox}}
+}
+\fi
+
+%ensure that there are always dots by adding a phantom subsection into every section.
+%A bit of a hack, but the dots only appear where there are subsections and this prevents authors from having to repeatedly add this command themselves
+\AtBeginSection[]
+{
+	\subsection*{}
+}
 
 % TOC Section
 \ifdisplaytocsection
@@ -146,7 +155,7 @@
 	{
 		\begin{frame}
 			\frametitle{\insertsubsection}
-			\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]
+			\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/shaded]
 		\end{frame}
 	}
 \fi
@@ -157,24 +166,26 @@
 %%%%%%%%%%%%%%%%%%
 %%% TITLE %%%
 %\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true,shadow=true]
-%\setbeamercolor*{titlelike}{fg=white,bg=isgmediumblue}
-%\setbeamercolor*{title}{parent=titlelike}	
-%\setbeamercolor*{title in head/foot}{fg=white,bg=isgmediumblue}
-%\setbeamercolor*{title in sidebar}{parent=palette sidebar quaternary}
-%\setbeamercolor*{subtitle}{parent=title}
+\setbeamercolor*{titlelike}{fg=rhulorange}
+\setbeamercolor*{title in head/foot}{fg=black,bg=rhulorange}
+\setbeamerfont{title}{series=\bfseries}
+\setbeamercolor*{subtitle}{fg=black}
+\setbeamerfont{subtitle}{shape=\normalfont}
+
+%\setbeamertemplate{frametitle}[default][colsep=-4bp]%,rounded=false,shadow=false]
 
 %%% COVER %%%
 %\setbeamercolor*{author}{}
 %\setbeamerfont*{author}{shape=\upshape,series=\bfseries}
 \setbeamerfont*{author}{shape=\itshape}
-%\setbeamercolor*{author in head/foot}{parent=palette primary}
+\setbeamercolor*{author in head/foot}{fg=white, bg=rhulgrey}
 %\setbeamercolor*{author in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
 %\setbeamercolor*{institute}{}
-\setbeamerfont{institute}{size=\small}
+\setbeamerfont{institute}{size=\small,shape=\normalfont}
 %\setbeamercolor*{institute in head/foot}{parent=palette tertiary}
 %\setbeamercolor*{institute in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
 \setbeamercolor*{date}{fg=rhulorange}
-\setbeamerfont{date}{size=\footnotesize}
+\setbeamerfont{date}{size=\footnotesize,shape=\normalfont}
 %\setbeamercolor*{date in head/foot}{parent=palette secondary}
 %\setbeamercolor*{date in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
 
@@ -182,7 +193,7 @@
 %\setbeamercolor{section in toc}{parent=structure}
 %\setbeamercolor{section in toc shaded}{parent=section in toc}
 %\setbeamercolor{section in toc shaded}{use=structure,fg=structure.fg}
-%\setbeamercolor*{section in head/foot}{fg=white,bg=black}
+\setbeamercolor*{section in head/foot}{fg=white,bg=rhulgrey}
 %\setbeamercolor*{section in sidebar}{parent=palette sidebar secondary}
 %\setbeamercolor*{section in sidebar shaded}{use=section in sidebar,fg=section in sidebar.fg!40!bg}
 %\setbeamercolor*{section number projected}{parent=item projected}
@@ -209,9 +220,9 @@
 %\setbeamercolor*{sidebar right}{parent=sidebar}
 
 %%% FRAMES %%%
-\setbeamercolor*{frametitle}{bg=isggrey,fg=white}
+\setbeamercolor*{frametitle}{bg=rhulgrey,fg=white}
 \setbeamercolor*{framesubtitle}{parent=frametitle}
-\setbeamercolor*{frametitle right}{bg=isggrey}
+\setbeamercolor*{frametitle right}{bg=rhulgrey}
 
 %%% BLOCKS%%%
 \setbeamertemplate{blocks}[rounded][shadow=true]
@@ -220,9 +231,9 @@
 \setbeamercolor*{block title example}{fg=white!50,bg= darkgreen!80}
 %\setbeamercolor*{block title}{bg=lightgray,fg=black}
 \setbeamercolor{block title}{bg=rhulorange,fg=white!50}
-\setbeamercolor*{block body}{bg=isglightgrey,fg=isggrey}%%%controls \proof{}
-\setbeamercolor*{block body alerted}{bg=isglightgrey,fg=isggrey}
-\setbeamercolor*{block body example}{bg=isglightgrey,fg=isggrey}%%%controls \begin{example}
+\setbeamercolor*{block body}{bg=isglightgrey,fg=rhulgrey}%%%controls \proof{}
+\setbeamercolor*{block body alerted}{bg=isglightgrey,fg=rhulgrey}
+\setbeamercolor*{block body example}{bg=isglightgrey,fg=rhulgrey}%%%controls \begin{example}
 %\setbeamercolor*{block body example}{fg= black,bg= orange!20}
 \setbeamercolor{structure}{fg=black}
 %\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!75!black}
@@ -266,8 +277,8 @@
 
 %%% TEXT %%%
 %\setbeamercolor*{normal text}{fg=black,bg=white}
-\setbeamercolor*{alerted text}{fg=isgmediumblue,bg=white}
-\setbeamercolor*{block title text}{bg=gray,fg=white}
+\setbeamercolor*{alerted text}{fg=rhulorange,bg=white}
+\setbeamercolor*{block title text}{bg=rhulgray,fg=white}
 \setbeamercolor*{block title example text}{bg=white,fg=white}
 
 
