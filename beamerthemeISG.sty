@@ -1,0 +1,290 @@
+% The ISGMadrid theme is derived from the Madrid theme.
+%
+% Changelog
+% 26/05/2015 - Version 1.4.1 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - cleared up some dead code, changed some colours.  The Github update.
+% 06/05/2015 - Version 1.4.0 by Dan Hutchinson <dojh342@gmail.com> - Set sections in header at max 3 & title page logo hack fix.
+% 25/11/2014 - Version 1.3.1 by Dan Hutchinson <dojh342@gmail.com> - small changes
+% 10/11/2014 - Version 1.3.0 by Dan Hutchinson <dojh342@gmail.com> - fixed bibliography parts use: \begin{frame}[t,allowframebreaks]\frametitle{References}
+% 01/06/2014 - Version 1.2.0 by Dan Hutchinson <dojh342@gmail.com>
+% 23/02/2012 - Version 1.1.0 by Marcelo Carlomagno Carlos <marcelo.carlos.2009@rhul.ac.uk>
+% 05/11/2009 - Version 1.0.0 by Marcelo Carlomagno Carlos <marcelo.carlos.2009@rhul.ac.uk>
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+
+\ProvidesPackage{beamerthemeISG}[2015/05/26]
+\RequirePackage{ISGCommon}
+\usepackage{tikz}%Needed for the titlepage logo
+%\RequirePackage{textpos}%Not entirely sure what this is yet but we may need it..
+
+\usetheme{split}
+\useoutertheme{smoothbars}
+\useinnertheme{rectangles}
+%\usecolortheme{whale}
+
+%%%%%%%%%%%%%%
+% PARAMETERS %
+%%%%%%%%%%%%%%
+
+%%%WANT BIG logo for the title page!
+\newif\ifdisplaylogo
+\DeclareOption{displaylogo}{\displaylogotrue}
+\DeclareOption{nologo}{\displaylogofalse}
+
+% Toggle footer
+\newif\ifdisplayfooter
+\DeclareOption{displayfooter}{\displayfootertrue}
+\DeclareOption{nodisplayfooter}{\displayfooterfalse}
+
+% Toggle TOC at every section
+\newif\ifdisplaytocsection
+\DeclareOption{displaytocsection}{\displaytocsectiontrue}
+\DeclareOption{notocsection}{\displaytocsectionfalse}
+
+% Toggle TOC at every subsection
+\newif\ifdisplaytocsubsection
+\DeclareOption{displaytocsubsection}{\displaytocsubsectiontrue}
+\DeclareOption{notocsubsection}{\displaytocsubsectionfalse}
+
+% Better header
+\newif\ifsmoothbar
+\DeclareOption{smoothbar}{\displaysmoothbartrue}
+\DeclareOption{nosmoothbar}{\displaysmoothbarfalse}
+
+\ProcessOptions
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theme specific settings %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{navigation symbols}{} %remove navigation buttons
+%\addtobeamertemplate{footer}{}{%insert page numbers
+%    \usebeamerfont{footline}%
+%    \usebeamercolor[fg]{footline}%
+%    \hspace{1em}%
+%    \insertframenumber/\inserttotalframenumber
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Redefining Title Page %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\defbeamertemplate*{title page}{ISG}
+%\addtobeamertemplate{title page}{ISG}
+{%
+	\begin{center}
+	%\vspace{-1cm}
+%\vfill
+  		\usebeamerfont{title}\textbf{\color{rhulorange}{\inserttitle}}\par
+  		\usebeamerfont{subtitle}\color{black}\insertsubtitle\par
+%  		\vspace{16pt}
+\vfill
+  		\usebeamerfont{author}\insertauthor\par
+%  		\vspace{12pt}
+\vfill
+ 		\usebeamerfont{institute}\insertinstitute\par
+% 		\vspace{12pt}
+\vfill
+  		\usebeamerfont{date}\color{rhulorange}{\insertdate}
+%		\vspace*{30pt}
+    \end{center}
+    		\vfill
+%		\megavfill
+%\hspace{-1cm}\includegraphics[width=1\paperwidth]{graphics/general/newtitlepagelogo.jpg}
+%\vspace{-4.5pt}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Applying the parameters defined above %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addtobeamertemplate{title page}{%Ideally the shifts would depend on the size of the footer..\footerheight?
+\begin{tikzpicture}[remember picture,overlay] 
+  \node [xshift=0cm,yshift=1.08cm] at (current page.south)
+  {\includegraphics[width=\paperwidth]{graphics/beamer-style/titlepagelogo.jpg}};                
+\end{tikzpicture}%
+}{}
+
+\ifdisplaylogo
+	\logo{\includegraphics[width=0.32\paperwidth]{graphics/general/isg-logo.png}\hspace*{0.1cm}}
+\fi
+
+
+% Footer
+%\ifdisplayfooter
+%	\setbeamercolor*{footlinecolor}{fg=rhulorange,bg=rhulorange}
+%\setbeamertemplate{footline}{%
+%  \begin{beamercolorbox}[sep=0.1cm,wd=\paperwidth,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor}
+%	\tinycolouredline{structure}
+%	\usefoottemplate{\vbox{%
+%	  {\color{white}\insertshorttitle \hskip 5pt -- \insertshortauthor \hfill \insertframenumber / 	\inserttotalframenumber}
+%	  \end{beamercolorbox}}%}
+%\fi
+
+%    \includegraphics[scale=0.07,height=10pt]{images/image1.png}
+%    \hspace{0.3cm}%
+%    \scriptsize{Seite \insertframenumber}
+%    \hfill
+%    \includegraphics[scale=0.25,height=10pt]{images/image2.png}
+%
+%}
+
+% TOC Section
+\ifdisplaytocsection
+	\AtBeginSection[]
+	{
+		\begin{frame}
+			\frametitle{\insertsection}
+			\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+		\end{frame}
+	}
+\fi
+
+% TOC SubSection
+\ifdisplaytocsubsection
+	\AtBeginSubsection[]
+	{
+		\begin{frame}
+			\frametitle{\insertsubsection}
+			\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]
+		\end{frame}
+	}
+\fi
+
+
+%%%%%%%%%%%%%%%%%%
+% COLOR SETTINGS % 
+%%%%%%%%%%%%%%%%%%
+%%% TITLE %%%
+%\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true,shadow=true]
+%\setbeamercolor*{titlelike}{fg=white,bg=isgmediumblue}
+%\setbeamercolor*{title}{parent=titlelike}	
+%\setbeamercolor*{title in head/foot}{fg=white,bg=isgmediumblue}
+%\setbeamercolor*{title in sidebar}{parent=palette sidebar quaternary}
+%\setbeamercolor*{subtitle}{parent=title}
+
+%%% COVER %%%
+%\setbeamercolor*{author}{}
+%\setbeamerfont*{author}{shape=\upshape,series=\bfseries}
+\setbeamerfont*{author}{shape=\itshape}
+%\setbeamercolor*{author in head/foot}{parent=palette primary}
+%\setbeamercolor*{author in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
+%\setbeamercolor*{institute}{}
+\setbeamerfont{institute}{size=\small}
+%\setbeamercolor*{institute in head/foot}{parent=palette tertiary}
+%\setbeamercolor*{institute in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
+\setbeamercolor*{date}{fg=rhulorange}
+\setbeamerfont{date}{size=\footnotesize}
+%\setbeamercolor*{date in head/foot}{parent=palette secondary}
+%\setbeamercolor*{date in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
+
+%%% SECTION %%%
+%\setbeamercolor{section in toc}{parent=structure}
+%\setbeamercolor{section in toc shaded}{parent=section in toc}
+%\setbeamercolor{section in toc shaded}{use=structure,fg=structure.fg}
+%\setbeamercolor*{section in head/foot}{fg=white,bg=black}
+%\setbeamercolor*{section in sidebar}{parent=palette sidebar secondary}
+%\setbeamercolor*{section in sidebar shaded}{use=section in sidebar,fg=section in sidebar.fg!40!bg}
+%\setbeamercolor*{section number projected}{parent=item projected}
+
+%%% SUBSECTION %%%
+%\setbeamercolor{subsection in toc}{fg = black}
+%\setbeamercolor{subsection in toc shaded}{parent=subsection in toc}
+\setbeamercolor*{subsection in head/foot}{bg=rhulorange}%,fg=rhulorange}
+%\setbeamercolor*{subsection in sidebar}{parent=palette sidebar primary}
+%\setbeamercolor*{subsection in sidebar shaded}{use=subsection in sidebar,fg=subsection in sidebar.fg!40!bg}
+%\setbeamercolor*{subsection number projected}{parent={subitem projected}}
+
+%%% SUBSUBSECTION %%%
+%\setbeamercolor*{subsubsection in toc}{parent=subsection in toc}
+%\setbeamercolor*{subsubsection in toc shaded}{parent=subsubsection in toc}
+%\setbeamercolor*{subsubsection in head/foot}{parent=subsection in head/foot}
+%\setbeamercolor*{subsubsection in sidebar}{parent=subsection in sidebar}
+%\setbeamercolor*{subsubsection in sidebar shaded}{parent=subsection in sidebar shaded}
+%\setbeamercolor*{subsubsection number projected}{parent=subsubitem projected}
+
+%%% SIDEBAR %%%
+%\setbeamercolor*{sidebar}{}
+%\setbeamercolor*{sidebar left}{parent=sidebar}
+%\setbeamercolor*{sidebar right}{parent=sidebar}
+
+%%% FRAMES %%%
+\setbeamercolor*{frametitle}{bg=isggrey,fg=white}
+\setbeamercolor*{framesubtitle}{parent=frametitle}
+\setbeamercolor*{frametitle right}{bg=isggrey}
+
+%%% BLOCKS%%%
+\setbeamertemplate{blocks}[rounded][shadow=true]
+%\setbeamertemplate{blocks}[rounded][shadow=true]
+\addtobeamertemplate{block begin}{\pgfsetfillopacity{0.8}}{\pgfsetfillopacity{1}}
+\setbeamercolor*{block title example}{fg=white!50,bg= darkgreen!80}
+%\setbeamercolor*{block title}{bg=lightgray,fg=black}
+\setbeamercolor{block title}{bg=rhulorange,fg=white!50}
+\setbeamercolor*{block body}{bg=isglightgrey,fg=isggrey}%%%controls \proof{}
+\setbeamercolor*{block body alerted}{bg=isglightgrey,fg=isggrey}
+\setbeamercolor*{block body example}{bg=isglightgrey,fg=isggrey}%%%controls \begin{example}
+%\setbeamercolor*{block body example}{fg= black,bg= orange!20}
+\setbeamercolor{structure}{fg=black}
+%\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!75!black}
+\setbeamercolor*{block title alerted}{bg=red!80,fg=white}
+%\setbeamercolor*{block title example}{bg=gray,fg=white}
+%\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!75!black}
+%\setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!75!black}
+%\setbeamercolor{block title example}{use=example text,fg=white,bg=example text.fg!75!black}
+%\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!10!bg}
+%\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!10!bg}
+%\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!10!bg}
+
+
+
+%%% SEPARATION LINES / HEADER / FOOTER %%%
+%\setbeamercolor*{separation line}{}
+%\setbeamercolor*{upper separation line head}{parent=separation line}
+%\setbeamercolor*{middle separation line head}{parent=separation line}
+%\setbeamercolor*{lower separation line head}{parent=separation line}
+%\setbeamercolor*{upper separation line foot}{parent=separation line}
+%\setbeamercolor*{middle separation line foot}{parent=separation line}
+%\setbeamercolor*{lower separation line foot}{parent=separation line}
+
+%%% ITEMS / ENUMERATE / DESCRIPTION %%%
+\setbeamercolor{item}{bg=white,fg=rhulorange}
+%\setbeamercolor*{subitem}{parent=item}
+%\setbeamercolor*{subsubitem}{parent=subitem}
+%\setbeamercolor*{item projected}{parent=item,use=item,fg=white,bg=blue}
+%\setbeamercolor*{subitem projected}{parent=item projected}
+%\setbeamercolor*{subsubitem projected}{parent=subitem projected}
+%\setbeamercolor*{enumerate item}{parent=item}
+%\setbeamercolor*{enumerate subitem}{parent=subitem}
+%\setbeamercolor*{enumerate subsubitem}{parent=subsubitem}
+%\setbeamercolor*{itemize item}{parent=item}
+%\setbeamercolor*{itemize subitem}{parent=subitem}
+%\setbeamercolor*{itemize subsubitem}{parent=subsubitem}
+%\setbeamercolor*{itemize/enumerate body}{}
+%\setbeamercolor*{itemize/enumerate subbody}{}
+%\setbeamercolor*{itemize/enumerate subsubbody}{}
+%\setbeamercolor*{description item}{parent=item}
+
+%%% TEXT %%%
+%\setbeamercolor*{normal text}{fg=black,bg=white}
+\setbeamercolor*{alerted text}{fg=isgmediumblue,bg=white}
+\setbeamercolor*{block title text}{bg=gray,fg=white}
+\setbeamercolor*{block title example text}{bg=white,fg=white}
+
+
+%%%Bibliography%%%
+\usepackage{natbib}
+%\bibliographystyle{apalike}
+\bibliographystyle{alpha}
+% make bibliography entries smaller
+\renewcommand\bibfont{\scriptsize}
+\setbeamertemplate{frametitle continuation}[from second] %place continuation label on bibliography from the second slide onwards
+% Use only black when writing the references
+\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry author}{fg=black}
+\setbeamercolor*{bibliography entry location}{fg=black}
+\setbeamercolor*{bibliography entry note}{fg=black}
+% remove the icons for the references
+\setbeamertemplate{bibliography item}{}
+
+\mode
+<all>

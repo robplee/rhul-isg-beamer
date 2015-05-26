@@ -1,0 +1,73 @@
+\documentclass{beamer}
+
+\usetheme[displayfooter]{ISGDan}%displaytocsubsection
+\usepackage{amsthm}
+
+%%%Packages
+%\usepackage{Beamer}
+\usepackage{xpatch}
+\usepackage{caption}
+
+\hypersetup{pdfpagemode=FullScreen}
+
+%%%---------------------------------------------------------------------
+\begin{document}
+
+%\setbeamertemplate{title page}[default][colsep=-0bp,rounded=false]
+%\setbeamertemplate{frametitle}[default][colsep=-4bp,rounded=false,shadow=false]
+%\setbeamertemplate{framesubtitle}{shadow=false}
+%\setbeamertemplate{blocks}[rounded][shadow=false]
+%\setbeamertemplate{headline}[shadow=false]
+%\setbeamertemplate{subsection in head}[shadow=false]
+%\setbeamertemplate{section in head}[shadow=false]
+%\setbeamertemplate{beamercolorbox}[shadow=false]
+
+\title{Thought inspiring title}
+\subtitle{More accurate and honest subtitle}  
+\author{Fantastic academic}
+\institute{Information Security Group,\\
+Royal Holloway}
+%\date{}
+\section{Introduction}\subsection{}%If no section is put in the title page the sections in the titlepage header will not behave.
+\begin{frame}
+\titlepage
+\end{frame}
+\setcounter{framenumber}{0}%Because title pages don't count.
+
+\begin{frame}\frametitle{ToC}
+\tableofcontents
+\end{frame}
+
+\setbeamercovered{invisible}
+\section{Two ways to cover}\subsection{Invisible covering}
+\begin{frame}\frametitle{I'm a frame title!}
+\begin{itemize}
+\item{I'm the first item!}
+\pause
+\item{I was invisible!}
+\end{itemize}
+\end{frame}
+
+\setbeamercovered{transparent}
+\subsection{Transparent covering}
+\begin{frame}\frametitle{I'm a frame title!}
+\begin{itemize}
+\item{I'm the first item!}
+\vfill
+\pause
+\item{I was transparent!}
+\vfill
+\pause
+\item{\cite{songs} is an interesting read.}
+\vfill
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t,allowframebreaks]
+\frametitle{References}
+\bibliography{presentation}
+\end{frame}
+
+\end{document}
+
+
