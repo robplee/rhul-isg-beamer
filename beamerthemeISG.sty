@@ -1,7 +1,8 @@
-% The ISGMadrid theme is derived from the Madrid theme.
+% The ISG theme is built on top of the smooth bars and rectangles themes with code adapted from other themes (such as split) for the footers.
 %
 % Changelog
-% 26/05/2015 - Version 1.4.2 by Robert Lee <robert.lee.2013@live.rhul.ac.uk - added an option to use one of the two footers provided.  Improved the colouring of the presentation
+% 26/05/2015 - Version 1.5.0 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - incorporated the colours from the ISGCommon style file in order to merge the two into one file.
+% 26/05/2015 - Version 1.4.2 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - added an option to use one of the two footers provided.  Improved the colouring of the presentation
 % 26/05/2015 - Version 1.4.1 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - cleared up some dead code, changed some colours.  The Github update.
 % 06/05/2015 - Version 1.4.0 by Dan Hutchinson <dojh342@gmail.com> - Set sections in header at max 3 & title page logo hack fix.
 % 25/11/2014 - Version 1.3.1 by Dan Hutchinson <dojh342@gmail.com> - small changes
@@ -17,10 +18,34 @@
 %
 
 \ProvidesPackage{beamerthemeISG}[2015/05/26]
-\RequirePackage{ISGCommon}
-\usepackage{tikz}%Needed for the titlepage logo
+\RequirePackage{tikz}%Needed for the titlepage logo
 %\RequirePackage{textpos}%Not entirely sure what this is yet but we may need it..
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{graphicx}
+\RequirePackage{listings}
+\RequirePackage{amssymb,amsmath}
 
+%%%%%%%%%%%%%%%%%
+%    COLOURS    %
+%%%%%%%%%%%%%%%%%
+\definecolor{isgdarkblue}{HTML}{01137A}
+\definecolor{isglightblue}{HTML}{6699CC}
+\definecolor{isgmediumblue}{HTML}{2e42ba}
+\definecolor{isggreen}{HTML}{338F35}
+\definecolor{rhulblue}{HTML}{4e9EE2}
+\definecolor{rhulorange}{HTML}{EB641E}
+\definecolor{rhulgreen}{HTML}{99CC00}
+\definecolor{rhullightgrey}{RGB}{102, 102, 102}
+\definecolor{rhulgrey}{HTML}{2E3235}
+\definecolor{isglightgrey}{HTML}{EEEEEE}
+\definecolor{isggrey}{HTML}{404040}
+\definecolor{footerlightblue}{HTML}{DADAF6}
+
+
+%%%%%%%%%%%%%%%%
+%   INNER AND  %
+% OUTER THEMES %
+%%%%%%%%%%%%%%%%
 \useoutertheme{smoothbars}
 \useinnertheme{rectangles}
 
