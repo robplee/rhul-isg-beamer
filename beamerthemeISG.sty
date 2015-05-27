@@ -1,6 +1,7 @@
 % The ISG theme is built on top of the smooth bars and rectangles themes with code adapted from other themes (such as split) for the footers.
 %
 % Changelog
+% 27/05/2015 - Version 1.6.0 by Robert Lee <robert.lee.2013@live.rhul.ac.uk - fixed the vertical spacing on the title page and added a command which only inputs the options (and their corresponding vspace) if the element is present.
 % 27/05/2015 - Version 1.5.2 by Robert Lee <robert.lee.2013@live.rhul.ac.uk - rearranged footer/header code to prevent shadowheader option overriding the defined footers.  Also renamed some of the optional parameters to more logical names.  Removed some code which had been commented out.  Fixed some comments.
 % 27/05/2015 - Version 1.5.1 by Dan Hutchinson <dojh342@gmail.com> - Added options for different header styles including oldheader, shadow and noshadow (default)
 % 26/05/2015 - Version 1.5.0 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - incorporated the colours from the ISGCommon style file in order to merge the two into one file.
@@ -27,6 +28,18 @@
 \RequirePackage{graphicx}
 \RequirePackage{listings}
 \RequirePackage{amssymb,amsmath}
+\RequirePackage{ifthen}
+
+%%%%%%%%%%%%%%%%
+%    MACROS    %
+%%%%%%%%%%%%%%%%
+
+%A quick command used on the title page, the second argument is only included if the first is not empty.
+%Used in regulating vspace on the title page
+\newcommand{\TitleOption}[2]{%
+\ifthenelse{\equal{#1}{}}{}{#2}%
+}
+
 
 %%%%%%%%%%%%%%%%%
 %    COLOURS    %
@@ -93,24 +106,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefining Title Page %
 %%%%%%%%%%%%%%%%%%%%%%%%%
-\defbeamertemplate{title page}{ISG}
+\let\newinstitute\insertinstitute %Extra command needed to use TitleOption with the institute.
+
+\defbeamertemplate*{title page}{ISG}
 {%
 	\begin{center}
-  		\usebeamerfont{title}\inserttitle\par
-		\usebeamerfont{subtitle}\insertsubtitle
-		\vfill
-  		\usebeamerfont{author}\insertauthor
-		\vfill
- 		\usebeamerfont{institute}\insertinstitute
-		\vfill
-  		\usebeamerfont{date}\insertdate
+		\vspace{ -1cm } %force the effective top margin to be right under the header
+		\vspace{ \stretch{2} }
+  		{\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}\par
+		
+		\TitleOption{\insertsubtitle}{%
+		\vspace{ \stretch{0.5} }%
+		{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle}\par}
+		
+		\vspace{ \stretch{1.5} }%
+  		{\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor}\par
+		
+		\TitleOption{\newinstitute}{%
+		\vspace{ \stretch{0.5} }%
+ 		{\usebeamerfont{institute}\usebeamercolor[fg]{institute}\newinstitute}\par}
+		
+		\TitleOption{\insertdate}{%
+		\vspace{ \stretch{1} }%
+  		{\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate}}
+		\vspace{ 1.1cm } %force the effective bottom margin to be above the logo banner
     \end{center}
 }
 
 \addtobeamertemplate{title page}{%Ideally the shifts would depend on the size of the footer..\footerheight?
 \begin{tikzpicture}[remember picture,overlay] 
-  \node [xshift=0cm,yshift=1.075cm] at (current page.south)%place the logo bar just above the footer
-  {\includegraphics[width=\paperwidth]{graphics/beamer-style/titlepagelogo.jpg}};                
+	\node [xshift=0cm,yshift=1.075cm] at (current page.south)%place the logo bar just above the footer
+	{\includegraphics[width=\paperwidth]{graphics/beamer-style/titlepagelogo.jpg}};                
 \end{tikzpicture}%
 }{}
 
@@ -308,15 +334,15 @@
 %\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true,shadow=true]
 \setbeamercolor*{titlelike}{fg=rhulorange}
 \setbeamercolor*{title in head/foot}{fg=black,bg=rhulorange}
-\setbeamerfont{title}{series=\bfseries}
+\setbeamerfont*{title}{series=\bfseries, size=\Large}
 \setbeamercolor*{subtitle}{fg=black}
-\setbeamerfont{subtitle}{shape=\normalfont}
+\setbeamerfont*{subtitle}{shape=\normalfont,size=\large}
 %\setbeamertemplate{frametitle}[default][colsep=-4bp]%,rounded=false,shadow=false]
 
 %%% COVER %%%
 %\setbeamercolor*{author}{}
 %\setbeamerfont*{author}{shape=\upshape,series=\bfseries}
-\setbeamerfont*{author}{shape=\itshape}
+\setbeamerfont*{author}{shape=\itshape,size=\normalfont}
 \setbeamercolor*{author in head/foot}{fg=white, bg=rhulgrey}
 %\setbeamercolor*{author in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
 %\setbeamercolor*{institute}{}
@@ -324,7 +350,8 @@
 %\setbeamercolor*{institute in head/foot}{parent=palette tertiary}
 %\setbeamercolor*{institute in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
 \setbeamercolor*{date}{fg=rhulorange}
-\setbeamerfont{date}{size=\footnotesize,shape=\normalfont}
+\setbeamerfont*{date}{size=\footnotesize,shape=\normalfont}
+\setbeamercolor*{date}{fg=rhulorange}
 %\setbeamercolor*{date in head/foot}{parent=palette secondary}
 %\setbeamercolor*{date in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
 
