@@ -299,9 +299,11 @@
 \ifdisplaytocsection
 	\AtBeginSection[]
 	{
+		\subsection*{} %added to perform as described on line 150/151.  Apparently only one set of commands can be set to run AtBeginSection
 		\begin{frame}
 			\frametitle{\insertsection}
-			\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+			%\tableofcontents[sectionstyle=show/shaded]%,subsectionstyle=show/show/shaded]
+			\tableofcontents[currentsection]
 		\end{frame}
 	}
 \fi
