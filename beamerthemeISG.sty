@@ -106,8 +106,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefining Title Page %
 %%%%%%%%%%%%%%%%%%%%%%%%%
-\let\newinstitute\insertinstitute %Extra command needed to use TitleOption with the institute.
-
 \defbeamertemplate*{title page}{ISG}
 {%
 	\begin{center}
@@ -122,9 +120,8 @@
 		\vspace{ \stretch{1.5} }%
   		{\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor}\par
 		
-		\TitleOption{\newinstitute}{%
 		\vspace{ \stretch{0.5} }%
- 		{\usebeamerfont{institute}\usebeamercolor[fg]{institute}\newinstitute}\par}
+ 		{\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute}\par
 		
 		\TitleOption{\insertdate}{%
 		\vspace{ \stretch{1} }%
