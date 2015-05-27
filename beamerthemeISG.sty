@@ -1,7 +1,7 @@
 % The ISG theme is built on top of the smooth bars and rectangles themes with code adapted from other themes (such as split) for the footers.
 %
 % Changelog
-% 27/05/2015 - Version 1.5.2 by Robert Lee <robert.lee.2013@live.rhul.ac.uk - rearranged footer/header code to prevent shadowheader option overriding the defined footers.  Also renamed some of the optional parameters to more logical names.  Removed some code which had been commented out.
+% 27/05/2015 - Version 1.5.2 by Robert Lee <robert.lee.2013@live.rhul.ac.uk - rearranged footer/header code to prevent shadowheader option overriding the defined footers.  Also renamed some of the optional parameters to more logical names.  Removed some code which had been commented out.  Fixed some comments.
 % 27/05/2015 - Version 1.5.1 by Dan Hutchinson <dojh342@gmail.com> - Added options for different header styles including oldheader, shadow and noshadow (default)
 % 26/05/2015 - Version 1.5.0 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - incorporated the colours from the ISGCommon style file in order to merge the two into one file.
 % 26/05/2015 - Version 1.4.3 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - added an option to use one of the two footers provided.  Improved the colouring of the presentation
@@ -46,8 +46,7 @@
 
 
 %%%%%%%%%%%%%%%%
-%   INNER AND  %
-% OUTER THEMES %
+% INNER THEMES %
 %%%%%%%%%%%%%%%%
 \useinnertheme{rectangles}
 
@@ -91,7 +90,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{navigation symbols}{} %remove navigation buttons
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefining Title Page %
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -109,16 +107,16 @@
     \end{center}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Applying the parameters defined above %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \addtobeamertemplate{title page}{%Ideally the shifts would depend on the size of the footer..\footerheight?
 \begin{tikzpicture}[remember picture,overlay] 
   \node [xshift=0cm,yshift=1.075cm] at (current page.south)%place the logo bar just above the footer
   {\includegraphics[width=\paperwidth]{graphics/beamer-style/titlepagelogo.jpg}};                
 \end{tikzpicture}%
 }{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Applying the parameters defined above %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Outertheme
 \ifsmoothheader
