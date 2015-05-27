@@ -1,13 +1,13 @@
 \documentclass{beamer}
 
-\usetheme[]{ISG}
+\usetheme[displaysplitfooter,displaytocsection]{ISG}
 %\usepackage{amsthm}
 %\usepackage{xpatch}
 %\usepackage{caption}
 
 %\hypersetup{pdfpagemode=FullScreen}
 
-\title{Example Beamer Presentation\\title second line}
+\title{Example Beamer Presentation}
 \subtitle{A Demonstration of the ISG Beamer Template}  
 \author[R. Lee \& D. Hutchinson]{Robert Lee and Daniel Hutchinson}
 \institute{Information Security Group,\\
@@ -30,7 +30,7 @@ Royal Holloway}
 	\item Two different footers are provided by the ISG style.  They are called split and single
 	\item The single footer is the default and sets the footer as one solid orange bar
 	\item The split footer divides the footer into two halves, orange and grey.  The title and authors are displayed on different sides of the orange/grey split.
-	\item The footers are chosen by passing parameters when using the ISG theme, e.g. by \texttt{\textbackslash usetheme[displaysinglefooter]\{ISG\}} or \texttt{\textbackslash usetheme[displaysplitfooter]\{ISG\}}.
+	\item The footers are chosen by passing parameters when using the ISG theme, e.g.\ by \texttt{\textbackslash usetheme[displaysinglefooter]\{ISG\}} or \texttt{\textbackslash usetheme[displaysplitfooter]\{ISG\}}.
 	\item Examples of each footer can be found in following slides.
 \end{itemize}
 \end{frame}
@@ -45,6 +45,16 @@ Royal Holloway}
 \begin{center}
 	\includegraphics[scale=0.4]{graphics/split-footer.png}
 \end{center}
+\end{frame}
+
+\section{Table of Contents on Section and Subsection}
+\begin{frame}\frametitle{Showing progress through the presentation}
+\begin{itemize}
+\item The beamer style is also able to show a table of contents whenever a new section or subsection is begun.
+\item These options are selected by passing the appropriate parameters when using the ISG theme.
+\item E.g.\ \texttt{\textbackslash usetheme[displaytocsection]\{ISG\}} or \texttt{\textbackslash usetheme[displaytocsubsection]\{ISG\}}.
+\item These can be used together with other options in the ISG style, e.g.\ this presentation uses the following\\ {\scriptsize\texttt{\textbackslash usetheme[displaysinglefooter, displaytocsection]\{ISG\}}}
+\end{itemize}
 \end{frame}
 
 \setbeamercovered{invisible}

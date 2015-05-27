@@ -1,6 +1,7 @@
 % The ISG theme is built on top of the smooth bars and rectangles themes with code adapted from other themes (such as split) for the footers.
 %
 % Changelog
+% 27/05/2015 - Version 1.5.2 by Robert Lee <robert.lee.2013@live.rhul.ac.uk - rearranged footer/header code to prevent shadowheader option overriding the defined footers.  Also renamed some of the optional parameters to more logical names.  Removed some code which had been commented out.
 % 27/05/2015 - Version 1.5.1 by Dan Hutchinson <dojh342@gmail.com> - Added options for different header styles including oldheader, shadow and noshadow (default)
 % 26/05/2015 - Version 1.5.0 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - incorporated the colours from the ISGCommon style file in order to merge the two into one file.
 % 26/05/2015 - Version 1.4.3 by Robert Lee <robert.lee.2013@live.rhul.ac.uk> - added an option to use one of the two footers provided.  Improved the colouring of the presentation
@@ -21,7 +22,7 @@
 
 \ProvidesPackage{beamerthemeISG}[2015/05/26]
 \RequirePackage{tikz}%Needed for the titlepage logo
-%\RequirePackage{textpos}%Not entirely sure what this is yet but we may need it..
+%\RequirePackage{textpos}%A pack­age to fa­cil­i­tate place­ment of boxes at ab­so­lute po­si­tions on the LaTeX page.
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{graphicx}
 \RequirePackage{listings}
@@ -48,8 +49,6 @@
 %   INNER AND  %
 % OUTER THEMES %
 %%%%%%%%%%%%%%%%
-%\useoutertheme{miniframes}%This is clean
-%\useoutertheme{smoothbars}%This has shadows
 \useinnertheme{rectangles}
 
 %%%%%%%%%%%%%%
@@ -59,11 +58,9 @@
 % Toggle footer
 \newif\ifdisplaysplitfooter
 \DeclareOption{displaysplitfooter}{\displaysplitfootertrue}
-%\DeclareOption{nodisplayfooter}{\displaysplitfooterfalse}
 
 \newif\ifdisplaysinglefooter
 \DeclareOption{displaysinglefooter}{\displaysinglefootertrue}
-%\DeclareOption{nodisplayfooter}{\displaysinglefooterfalse}
 
 % Toggle TOC at every section
 \newif\ifdisplaytocsection
@@ -76,17 +73,16 @@
 \DeclareOption{notocsubsection}{\displaytocsubsectionfalse}
 
 % Shadows
-\newif\ifshadows
-\DeclareOption{shadows}{\shadowstrue}
-\newif\ifnoshadows
-\DeclareOption{noshadows}{\noshadowstrue}
+\newif\ifsmoothheader
+\DeclareOption{smoothheader}{\smoothheadertrue}
+\DeclareOption{nosmoothheader}{\smoothheaderfalse}
 
-% Old header
-\newif\ifoldheader
-\DeclareOption{oldheader}{\oldheadertrue}
+% Old (shadow theme based) header
+\newif\ifshadowheader
+\DeclareOption{shadowheader}{\shadowheadertrue}
 
 \ExecuteOptions{displaysinglefooter} %The default footer is the single coloured footer
-\ExecuteOptions{noshadows} %The default is no shadows
+\ExecuteOptions{nosmoothheader} %The default is to not use the smooth headers, instead to use the sharp-lined header
 
 \ProcessOptions\relax
 
@@ -99,11 +95,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Redefining Title Page %
 %%%%%%%%%%%%%%%%%%%%%%%%%
-%\setbeamercolor*{date}{fg=rhulorange}
-%\setbeamercolor{date}{fg=rhulorange}
-
 \defbeamertemplate{title page}{ISG}
-%\addtobeamertemplate{title page}{ISG}
 {%
 	\begin{center}
   		\usebeamerfont{title}\inserttitle\par
@@ -115,12 +107,6 @@
 		\vfill
   		\usebeamerfont{date}\insertdate
     \end{center}
-%    	\vfill
-%		\vfill
-%		\vfill
-%\megavfill
-%\hspace{-1cm}\includegraphics[width=1\paperwidth]{graphics/general/newtitlepagelogo.jpg}
-%\vspace{-4.5pt}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -133,6 +119,136 @@
   {\includegraphics[width=\paperwidth]{graphics/beamer-style/titlepagelogo.jpg}};                
 \end{tikzpicture}%
 }{}
+
+% Outertheme
+\ifsmoothheader
+	\useoutertheme{smoothbars}%This uses the smoothbars header which has colours fading between sections
+\else
+	\useoutertheme{miniframes}%This has clean lines between portions of the header
+\fi
+
+
+\ifshadowheader
+	\useoutertheme{shadow}%This is the header used in some old versions of the beamer theme.
+	%%%This limits the number of sections displayed in the header to 3.  This prevents the header from taking over the usable space on the slides
+	\makeatletter
+		\newcount\c@p
+		\newcount\c@m
+		\newcount\c@pp
+		\newcount\c@mm	
+	\def\insertsectionnavigation#1{%
+	\hbox to #1{%
+	\vbox{{\usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+	\vskip0.5625ex%
+	\def\slideentry##1##2##3##4##5##6{}%
+	\def\sectionentry##1##2##3##4##5{%
+		\ifnum##5=\c@part%
+			\def\insertsectionhead{##2}%
+			\def\insertsectionheadnumber{##1}%
+			\def\insertpartheadnumber{##5}%
+			\c@p=\c@section%
+			\c@m=\c@section%
+			\c@pp=\c@section%
+			\c@mm=\c@section%
+			\advance\c@m by -1 %
+			\advance\c@p by 1 %
+			\advance\c@mm by -2 %
+			\advance\c@pp by 2 %
+			%     
+			\ifnum \c@section=1
+				\ifnum\c@section=##1%
+					\setbox\beamer@tempbox=\hbox{%
+						\hyperlink{Navigation##3}{\hbox to #1{%
+							{\hskip0.3cm\usebeamertemplate{section in head/foot}\hskip0.3cm}}}}%
+				\else%
+					\ifnum##1=\c@p%
+						\setbox\beamer@tempbox=\hbox{%
+							\hyperlink{Navigation##3}{\hbox to #1{%
+								{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
+					\else%
+						\ifnum##1=\c@pp%
+							\setbox\beamer@tempbox=\hbox{%
+								\hyperlink{Navigation##3}{\hbox to #1{%
+									{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
+						\else%
+						\fi%
+					\fi%
+				\fi%%  
+			\else%
+				\ifnum \c@section=\beamer@sectionmax
+					\ifnum\c@section=##1%
+						\setbox\beamer@tempbox=\hbox{%
+							\hyperlink{Navigation##3}{\hbox to #1{%
+								{\hskip0.3cm\usebeamertemplate{section in head/foot}\hskip0.3cm}}}}%
+					\else%
+						\ifnum##1=\c@m%
+							\setbox\beamer@tempbox=\hbox{%
+								\hyperlink{Navigation##3}{\hbox to #1{%
+									{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}
+						%
+						\else%
+							\ifnum##1=\c@mm%
+								\setbox\beamer@tempbox=\hbox{%
+									\hyperlink{Navigation##3}{\hbox to #1{%
+										{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
+							%
+							\else%
+							%
+							\fi%
+						\fi%
+					%
+					\fi%%
+				\else%
+					\ifnum\c@section=##1%
+						\setbox\beamer@tempbox=\hbox{%
+							\hyperlink{Navigation##3}{\hbox to #1{%
+								{\hskip0.3cm\usebeamertemplate{section in head/foot}\hskip0.3cm}}}}%
+					\else%
+						\ifnum##1=\c@m%
+							\setbox\beamer@tempbox=\hbox{%
+								\hyperlink{Navigation##3}{\hbox to #1{%
+									{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}
+						\else%
+							\ifnum##1=\c@p%
+								\setbox\beamer@tempbox=\hbox{%
+									\hyperlink{Navigation##3}{\hbox to #1{%
+										{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
+							\else%
+							\fi%
+						\fi%
+					\fi%
+				\fi%
+			\fi%
+		%
+		
+		\ht\beamer@tempbox=1.6875ex%
+		\dp\beamer@tempbox=0.75ex%
+		\box\beamer@tempbox
+		\fi}%
+		\dohead\vskip0.5625ex}}\hfil}}
+	
+	
+	\setbeamertemplate{headline}%{split theme} % full manual adjustment
+	{%
+		\leavevmode%
+		\@tempdimb=3em%
+		\ifdim\@tempdimb>0pt%
+			\advance\@tempdimb by 1.825ex%
+			\begin{beamercolorbox}[wd=.5\paperwidth,ht=\@tempdimb]{section in head/foot}%
+				\vbox to\@tempdimb{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
+			\end{beamercolorbox}%
+			\begin{beamercolorbox}[wd=.5\paperwidth,ht=\@tempdimb]{subsection in head/foot}%
+				\vbox to\@tempdimb{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}%
+			\end{beamercolorbox}%
+		\fi%
+	}
+	
+		\AtBeginDocument %a hack which ensures the theme will work correctly.  The header doesn't work correctly before the first section of the presentation.
+		{
+			\section*{}
+		}
+\fi
+
 
 % Footer
 \ifdisplaysinglefooter
@@ -148,142 +264,9 @@
     \hbox{\begin{beamercolorbox}[wd=0.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=0.5cm,rightskip=0.5cm]{author in head/foot}%
       \hfill \insertshortauthor
     \end{beamercolorbox}%
-	%\hspace{-3pt}
     \begin{beamercolorbox}[wd=0.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=0.5cm,rightskip=0.5cm]{title in head/foot}%
       \usebeamerfont{title in head/foot}\insertshorttitle \hfill \insertframenumber/\inserttotalframenumber
     \end{beamercolorbox}}
-}
-\fi
-
-% Outertheme
-\ifshadows
-\useoutertheme{smoothbars}%This has shadows
-\fi
-
-\ifnoshadows
-\useoutertheme{miniframes}%This is clean
-\fi
-
-\ifoldheader
-\useoutertheme{shadow}%This is the old header with fix
-%%%This should sort out the number of sections in the header
-\makeatletter
-       \newcount\c@p
-       \newcount\c@m
-              \newcount\c@pp
-       \newcount\c@mm
-\def\insertsectionnavigation#1{%
-  \hbox to #1{%
-    \vbox{{\usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
-     \vskip0.5625ex%
-    \def\slideentry##1##2##3##4##5##6{}%
-     \def\sectionentry##1##2##3##4##5{%
-       \ifnum##5=\c@part%
-       \def\insertsectionhead{##2}%
-       \def\insertsectionheadnumber{##1}%
-       \def\insertpartheadnumber{##5}%
-       \c@p=\c@section%
-       \c@m=\c@section%
-      \c@pp=\c@section%
-       \c@mm=\c@section%
-       \advance\c@m by -1 %
-       \advance\c@p by 1 %
-       \advance\c@mm by -2 %
-       \advance\c@pp by 2 %
-       %     
-       \ifnum \c@section=1
-                    \ifnum\c@section=##1%
-               \setbox\beamer@tempbox=\hbox{%
-              \hyperlink{Navigation##3}{\hbox to #1{%
-             {\hskip0.3cm\usebeamertemplate{section in head/foot}\hskip0.3cm}}}}%
-             \else%
-                 \ifnum##1=\c@p%
-                 \setbox\beamer@tempbox=\hbox{%
-                  \hyperlink{Navigation##3}{\hbox to #1{%
-                 {\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}
-                 %
-                \else%
-                 \ifnum##1=\c@pp%
-                 \setbox\beamer@tempbox=\hbox{%
-                  \hyperlink{Navigation##3}{\hbox to #1{%
-               {\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
-               %
-               \else%
-               %
-               \fi%
-               \fi%
-               %
-            \fi%%  
-         \else%
-  \ifnum \c@section=\beamer@sectionmax
-               \ifnum\c@section=##1%
-               \setbox\beamer@tempbox=\hbox{%
-              \hyperlink{Navigation##3}{\hbox to #1{%
-             {\hskip0.3cm\usebeamertemplate{section in head/foot}\hskip0.3cm}}}}%
-             \else%
-                 \ifnum##1=\c@m%
-                 \setbox\beamer@tempbox=\hbox{%
-                  \hyperlink{Navigation##3}{\hbox to #1{%
-                 {\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}
-                 %
-                \else%
-                 \ifnum##1=\c@mm%
-                 \setbox\beamer@tempbox=\hbox{%
-                  \hyperlink{Navigation##3}{\hbox to #1{%
-               {\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
-               %
-               \else%
-               %
-               \fi%
-               \fi%
-               %
-            \fi%%
-       \else%
-             \ifnum\c@section=##1%
-               \setbox\beamer@tempbox=\hbox{%
-              \hyperlink{Navigation##3}{\hbox to #1{%
-             {\hskip0.3cm\usebeamertemplate{section in head/foot}\hskip0.3cm}}}}%
-             \else%
-                 \ifnum##1=\c@m%
-                 \setbox\beamer@tempbox=\hbox{%
-                  \hyperlink{Navigation##3}{\hbox to #1{%
-                 {\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}
-                 %
-                \else%
-                 \ifnum##1=\c@p%
-                 \setbox\beamer@tempbox=\hbox{%
-                  \hyperlink{Navigation##3}{\hbox to #1{%
-               {\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
-               %
-               \else%
-               %
-               \fi%
-               \fi%
-               %
-            \fi%%
-            %
-            \fi
-            \fi
-            %
-
-      \ht\beamer@tempbox=1.6875ex%
-       \dp\beamer@tempbox=0.75ex%
-       \box\beamer@tempbox\fi}%
-     \dohead\vskip0.5625ex}}\hfil}}
-
-\setbeamertemplate{headline}%{split theme} % full manual adjustment
-{%
-  \leavevmode%
-  \@tempdimb=3em%
-  \ifdim\@tempdimb>0pt%
-    \advance\@tempdimb by 1.825ex%
-    \begin{beamercolorbox}[wd=.5\paperwidth,ht=\@tempdimb]{section in head/foot}%
-      \vbox to\@tempdimb{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.5\paperwidth,ht=\@tempdimb]{subsection in head/foot}%
-      \vbox to\@tempdimb{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}%
-    \end{beamercolorbox}%
-  \fi%
 }
 \fi
 
@@ -330,7 +313,6 @@
 \setbeamerfont{title}{series=\bfseries}
 \setbeamercolor*{subtitle}{fg=black}
 \setbeamerfont{subtitle}{shape=\normalfont}
-
 %\setbeamertemplate{frametitle}[default][colsep=-4bp]%,rounded=false,shadow=false]
 
 %%% COVER %%%
@@ -387,16 +369,13 @@
 
 %%% BLOCKS%%%
 \setbeamertemplate{blocks}[shadow=false]%Can add rounded to get the old look
-%\setbeamertemplate{blocks}[rounded][shadow=true]
 %\addtobeamertemplate{block begin}{\pgfsetfillopacity{0.8}}{\pgfsetfillopacity{1}}%Transparency
 \setbeamercolor{block title example}{bg=isggreen,fg=white!50}
 \setbeamercolor{block body example}{bg=isglightgrey,fg=rhulgrey}
-%\setbeamercolor*{block title}{bg=lightgray,fg=black}
 \setbeamercolor{block title}{bg=rhullightgrey,fg=white!50}
 \setbeamercolor{block body}{bg=isglightgrey,fg=rhulgrey}
 \setbeamercolor{block body alerted}{bg=isglightgrey,fg=rhulgrey}
 \setbeamercolor{structure}{fg=black}
-%\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!75!black}
 \setbeamercolor{block title alerted}{bg=red!80,fg=white}
 %\setbeamercolor*{block title example}{bg=gray,fg=white}
 %\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!75!black}
@@ -405,8 +384,6 @@
 %\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!10!bg}
 %\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!10!bg}
 %\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!10!bg}
-
-
 
 %%% SEPARATION LINES / HEADER / FOOTER %%%
 \setbeamertemplate{upper separation line head}[colsep=-2bp,rounded=false,shadow=false]
@@ -442,18 +419,14 @@
 
 %%%Bibliography%%%
 \usepackage{natbib}
-%\bibliographystyle{apalike}
 \bibliographystyle{alpha}
-% make bibliography entries smaller
-\renewcommand\bibfont{\scriptsize}
+\renewcommand\bibfont{\scriptsize} % make bibliography entries smaller
 \setbeamertemplate{frametitle continuation}[from second] %place continuation label on bibliography from the second slide onwards
-% Use only black when writing the references
-\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry title}{fg=black} % Use only black when writing the references
 \setbeamercolor*{bibliography entry author}{fg=black}
 \setbeamercolor*{bibliography entry location}{fg=black}
 \setbeamercolor*{bibliography entry note}{fg=black}
-% remove the icons for the references
-\setbeamertemplate{bibliography item}{}
+\setbeamertemplate{bibliography item}{} % remove the icons for the references
 
 \mode
 <all>
