@@ -25,12 +25,12 @@
 
 \ProvidesPackage{beamerthemeISG}[2015/05/26]
 \RequirePackage{tikz}%Needed for the titlepage logo
-%\RequirePackage{textpos}%A pack­age to fa­cil­i­tate place­ment of boxes at ab­so­lute po­si­tions on the LaTeX page.
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{graphicx}
 \RequirePackage{listings}
 \RequirePackage{amssymb,amsmath}
 \RequirePackage{ifthen}
+\RequirePackage{natbib}
 
 %%%%%%%%%%%%%%%%
 %    MACROS    %
@@ -438,11 +438,10 @@
 %\setbeamercolor*{description item}{parent=item}
 
 %%% TEXT %%%
-%\setbeamercolor*{normal text}{fg=black,bg=white}
+\setbeamercolor*{normal text}{fg=black,bg=white}
 \setbeamercolor*{alerted text}{fg=rhulorange,bg=white}
 
 %%%Bibliography%%%
-\usepackage{natbib}
 \bibliographystyle{alpha}
 \renewcommand\bibfont{\scriptsize} % make bibliography entries smaller
 \setbeamertemplate{frametitle continuation}[from second] %place continuation label on bibliography from the second slide onwards
