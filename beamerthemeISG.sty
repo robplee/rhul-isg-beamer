@@ -86,16 +86,16 @@
 \DeclareOption{notocsubsection}{\displaytocsubsectionfalse}
 
 % Shadows
-\newif\ifsmoothheader
-\DeclareOption{smoothheader}{\smoothheadertrue}
-\DeclareOption{nosmoothheader}{\smoothheaderfalse}
+\newif\ifsharpheader
+\DeclareOption{sharpheader}{\sharpheadertrue}
+\DeclareOption{blurredheader}{\sharpheaderfalse}
 
 % Old (shadow theme based) header
-\newif\ifshadowheader
-\DeclareOption{shadowheader}{\shadowheadertrue}
+\newif\ifsplitheader
+\DeclareOption{splitheader}{\splitheadertrue}
 
 \ExecuteOptions{displaysinglefooter} %The default footer is the single coloured footer
-\ExecuteOptions{nosmoothheader} %The default is to not use the smooth headers, instead to use the sharp-lined header
+\ExecuteOptions{sharpheader} %The default is to not use the smooth headers, instead to use the sharp-lined header
 
 \ProcessOptions\relax
 
@@ -143,14 +143,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Outertheme
-\ifsmoothheader
-	\useoutertheme{smoothbars}%This uses the smoothbars header which has colours fading between sections
-\else
+\ifsharpheader
 	\useoutertheme{miniframes}%This has clean lines between portions of the header
+\else
+	\useoutertheme{smoothbars}%This uses the smoothbars header which has colours fading between sections	
 \fi
 
 
-\ifshadowheader
+\ifsplitheader
 	\useoutertheme{shadow}%This is the header used in some old versions of the beamer theme.
 	%%%This limits the number of sections displayed in the header to 3.  This prevents the header from taking over the usable space on the slides
 	\makeatletter
