@@ -98,6 +98,8 @@
 \ExecuteOptions{displaysinglefooter} %The default footer is the single coloured footer
 \ExecuteOptions{sharpheader} %The default is to not use the smooth headers, instead to use the sharp-lined header
 
+\beamer@compresstrue
+
 \ProcessOptions\relax
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -305,12 +307,12 @@
 \ifdisplaytocsection
 	\AtBeginSection[]
 	{
-		\subsection*{} %added to perform as described on line 150/151.  Apparently only one set of commands can be set to run AtBeginSection
 		\begin{frame}
 			\frametitle{\insertsection}
 			%\tableofcontents[sectionstyle=show/shaded]%,subsectionstyle=show/show/shaded]
 			\tableofcontents[currentsection]
 		\end{frame}
+		\subsection*{} %added to perform as described on line 150/151.  Apparently only one set of commands can be set to run AtBeginSection
 	}
 \fi
 
