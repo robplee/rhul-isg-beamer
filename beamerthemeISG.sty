@@ -1,6 +1,7 @@
 % The ISG theme is built on top of the smooth bars and rectangles themes with code adapted from other themes (such as split) for the footers.
 %
 % Changelog
+% 28/05/2015 - Version 1.6.1 by Dan Hutchinson <dojh342@gmail.com> - Updated environment colouring to match the theme, disliked the new naming conventions.
 % 27/05/2015 - Version 1.6.0 by Robert Lee <robert.lee.2013@live.rhul.ac.uk - fixed the vertical spacing on the title page and added a command which only inputs the options (and their corresponding vspace) if the element is present.
 % 27/05/2015 - Version 1.5.2 by Robert Lee <robert.lee.2013@live.rhul.ac.uk - rearranged footer/header code to prevent shadowheader option overriding the defined footers.  Also renamed some of the optional parameters to more logical names.  Removed some code which had been commented out.  Fixed some comments.
 % 27/05/2015 - Version 1.5.1 by Dan Hutchinson <dojh342@gmail.com> - Added options for different header styles including oldheader, shadow and noshadow (default)
@@ -392,13 +393,13 @@
 %%% BLOCKS%%%
 \setbeamertemplate{blocks}[shadow=false]%Can add rounded to get the old look
 %\addtobeamertemplate{block begin}{\pgfsetfillopacity{0.8}}{\pgfsetfillopacity{1}}%Transparency
-\setbeamercolor{block title example}{bg=isggreen,fg=white!50}
+\setbeamercolor{block title example}{bg=rhullightgrey,fg=white!50}
 \setbeamercolor{block body example}{bg=isglightgrey,fg=rhulgrey}
-\setbeamercolor{block title}{bg=rhullightgrey,fg=white!50}
+\setbeamercolor{block title}{bg=rhulorange,fg=white!50}
 \setbeamercolor{block body}{bg=isglightgrey,fg=rhulgrey}
 \setbeamercolor{block body alerted}{bg=isglightgrey,fg=rhulgrey}
 \setbeamercolor{structure}{fg=black}
-\setbeamercolor{block title alerted}{bg=red!80,fg=white}
+\setbeamercolor{block title alerted}{bg=red,fg=white}
 %\setbeamercolor*{block title example}{bg=gray,fg=white}
 %\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!75!black}
 %\setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!75!black}
