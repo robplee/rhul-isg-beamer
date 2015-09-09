@@ -308,9 +308,8 @@
 	\AtBeginSection[]
 	{
 		\begin{frame}
-			\frametitle{\insertsection}
-			%\tableofcontents[sectionstyle=show/shaded]%,subsectionstyle=show/show/shaded]
-			\tableofcontents[currentsection]
+			%\frametitle{\insertsection}
+			\tableofcontents[currentsection, subsectionstyle=show/show/hide]
 		\end{frame}
 		\subsection*{} %added to perform as described on line 150/151.  Apparently only one set of commands can be set to run AtBeginSection
 	}
@@ -318,11 +317,19 @@
 
 % TOC SubSection
 \ifdisplaytocsubsection
+	\AtBeginSection[]
+	{
+	\begin{frame}
+			%\frametitle{\insertsection}
+			\tableofcontents[currentsection, subsectionstyle=show/shaded/hide]
+		\end{frame}
+		\subsection*{} %added to perform as described on line 150/151.  Apparently only one set of commands can be set to run AtBeginSection
+	}
 	\AtBeginSubsection[]
 	{
 		\begin{frame}
-			\frametitle{\insertsubsection}
-			\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/shaded]
+			%\frametitle{\insertsubsection}
+			\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]
 		\end{frame}
 	}
 \fi
