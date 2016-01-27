@@ -1,6 +1,6 @@
 \documentclass[]{beamer}
 
-\usetheme[displaysinglefooter,displaytocsection]{ISG}
+\usetheme[displaysplitfooter,displaytocsection]{ISG}
 
 
 \title{Example Beamer Presentation}
@@ -10,35 +10,20 @@
 Royal Holloway}
 
 \begin{document}
-\begin{frame}
-	\titlepage
-\end{frame}
+
+\rhultitlepage
 
 \begin{frame}\frametitle{Presentation Contents}
 	\tableofcontents
 \end{frame}
 
-\section{Available Footers}
-\begin{frame}\frametitle{Split or Single?}
+\section{Title Page}
+\begin{frame}\frametitle{RHUL Title page}
 \begin{itemize}
-	\item Two different footers are provided by the ISG style.  They are called split and single
-	\item The single footer is the default and sets the footer as one solid orange bar
-	\item The split footer divides the footer into two halves, orange and grey.  The title and authors are displayed on different sides of the orange/grey split.
-	\item The footers are chosen by passing parameters when using the ISG theme, e.g.\ by \texttt{\textbackslash usetheme[displaysinglefooter]\{ISG\}} or \texttt{\textbackslash usetheme[displaysplitfooter]\{ISG\}}.
-	\item Examples of each footer can be found in the following slides.
+	\item We (the authors of this theme) think that the title page looks better if it has the single colour footer.
+	\item To use this option simply create your title page slide using \texttt{\textbackslash rhultitlepage} (don't put it in a frame).
+	\item If you wish to have the same footer on every slide, including title page, just create the title page in the normal way e.g. \texttt{\textbackslash frame\{\textbackslash titlepage\}}.
 \end{itemize}
-\end{frame}
-
-\begin{frame}\frametitle{\texttt{singlefooter}}
-\begin{center}
-	\includegraphics[scale=0.4]{graphics/singlefooter.png}
-\end{center}
-\end{frame}
-
-\begin{frame}\frametitle{\texttt{splitfooter}}
-\begin{center}
-	\includegraphics[scale=0.4]{graphics/splitfooter.png}
-\end{center}
 \end{frame}
 
 \section{Table of Contents}
