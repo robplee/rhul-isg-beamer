@@ -1,21 +1,4 @@
-% The ISG theme is built on top of the smooth bars and rectangles themes with code adapted from other themes (such as split) for the footers.
-%
-% Changelog
-% 28/05/2015 - Version 1.6.2 by Robert Lee <robert (dot) lee (dot) 2013 (at) live (dot) rhul (dot) ac (dot) uk> - Changed the names of the headers to more user-friendly versions.  Updated the if statements in body to reflect parameter name changes.
-% 28/05/2015 - Version 1.6.1 by Dan Hutchinson <dojh342 (at) gmail (dot) com> - Updated environment colouring to match the theme, minor changes.
-% 27/05/2015 - Version 1.6.0 by Robert Lee <robert (dot) lee (dot) 2013 (at) live (dot) rhul (dot) ac (dot) uk> - fixed the vertical spacing on the title page and added a command which only inputs the options (and their corresponding vspace) if the element is present.
-% 27/05/2015 - Version 1.5.2 by Robert Lee <robert (dot) lee (dot) 2013 (at) live (dot) rhul (dot) ac (dot) uk> - rearranged footer/header code to prevent shadowheader option overriding the defined footers.  Also renamed some of the optional parameters to more logical names.  Removed some code which had been commented out.  Fixed some comments.
-% 27/05/2015 - Version 1.5.1 by Dan Hutchinson <dojh342 (at) gmail (dot) com> - Added options for different header styles including oldheader, shadow and noshadow (default)
-% 26/05/2015 - Version 1.5.0 by Robert Lee <robert (dot) lee (dot) 2013 (at) live (dot) rhul (dot) ac (dot) uk> - incorporated the colours from the ISGCommon style file in order to merge the two into one file.
-% 26/05/2015 - Version 1.4.3 by Robert Lee <robert (dot) lee (dot) 2013 (at) live (dot) rhul (dot) ac (dot) uk> - added an option to use one of the two footers provided.  Improved the colouring of the presentation
-% 26/05/2015 - Version 1.4.2 by Robert Lee <robert (dot) lee (dot) 2013 (at) live (dot) rhul (dot) ac (dot) uk> - cleared up some dead code, changed some colours.  The Github update.
-% 25/05/2015 - Version 1.4.1 by Dan Hutchinson <dojh342 (at) gmail (dot) com> - Fixed the logo position with tikz
-% 06/05/2015 - Version 1.4.0 by Dan Hutchinson <dojh342 (at) gmail (dot) com> - Set sections in header at max 3 & title page logo hack fix.
-% 25/11/2014 - Version 1.3.1 by Dan Hutchinson <dojh342 (at) gmail (dot) com> - small changes
-% 10/11/2014 - Version 1.3.0 by Dan Hutchinson <dojh342 (at) gmail (dot) com> - fixed bibliography parts use: \begin{frame}[t,allowframebreaks]\frametitle{References}
-% 01/06/2014 - Version 1.2.0 by Dan Hutchinson <dojh342 (at) gmail (dot) com>
-% 23/02/2012 - Version 1.1.0 by Marcelo Carlomagno Carlos <marcelo.carlos.2009@rhul.ac.uk>
-% 05/11/2009 - Version 1.0.0 by Marcelo Carlomagno Carlos <marcelo.carlos.2009@rhul.ac.uk>
+% The ISG theme is built on top of the miniframes and rectangles themes with code adapted from other themes for the footers.
 %
 % This file may be distributed and/or modified
 %
@@ -86,8 +69,6 @@
 \DeclareOption{displaytocsubsection}{\displaytocsubsectiontrue}
 \DeclareOption{notocsubsection}{\displaytocsubsectionfalse}
 
-\ExecuteOptions{displaysinglefooter} %The default footer is the single coloured footer
-
 \beamer@compresstrue
 
 \ProcessOptions\relax
@@ -102,6 +83,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \defbeamertemplate*{title page}{ISG}
 {%
+	%\setbeamercolor*{footlinecolor}{fg=rhulorange,bg=rhulorange}
+	%\setbeamertemplate{footline}{%
+	%\begin{beamercolorbox}[sep=0.07cm,wd=\paperwidth,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor}
+	%	  {\color{white}\insertshorttitle\ --\ \insertshortauthor \hfill \insertframenumber/\inserttotalframenumber}
+	%\end{beamercolorbox}}
+
 	\begin{center}
 		\vspace{ -1cm } %force the effective top margin to be right under the header
 		\vspace{ \stretch{2} }
@@ -140,15 +127,15 @@
 
 
 % Footer
-\ifdisplaysinglefooter
-	\setbeamercolor*{footlinecolor}{fg=rhulorange,bg=rhulorange}
+\newcommand{\rhultitlepage}[0]{{
+\setbeamercolor*{footlinecolor}{fg=rhulorange,bg=rhulorange}
 \setbeamertemplate{footline}{%
-  \begin{beamercolorbox}[sep=0.07cm,wd=\paperwidth,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor}
-	  {\color{white}\insertshorttitle\ --\ \insertshortauthor \hfill \insertframenumber/\inserttotalframenumber}
-	  \end{beamercolorbox}}%}
-\fi
+	\begin{beamercolorbox}[sep=0.07cm,wd=\paperwidth,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor}
+		{\color{white}\insertshorttitle\ --\ \insertshortauthor \hfill \insertframenumber/\inserttotalframenumber}
+	\end{beamercolorbox}}%
+\frame{\titlepage}}
+}
 
-\ifdisplaysplitfooter
 \setbeamertemplate{footline}{%
     \hbox{\begin{beamercolorbox}[wd=0.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=0.5cm,rightskip=0.5cm]{author in head/foot}%
       \hfill \insertshortauthor
@@ -157,8 +144,6 @@
       \usebeamerfont{title in head/foot}\insertshorttitle \hfill \insertframenumber/\inserttotalframenumber
     \end{beamercolorbox}}
 }
-\fi
-
 
 %ensure that there are always dots by adding a phantom subsection into every section.
 %A bit of a hack, but the dots only appear where there are subsections and this prevents authors from having to repeatedly add this command themselves
