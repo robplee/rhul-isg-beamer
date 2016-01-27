@@ -5,3 +5,6 @@ example-presentation.synctex.gz
 example-presentation.toc
 example-presentation.log
 example-presentation.snm
+.DS_Store
+make
+
