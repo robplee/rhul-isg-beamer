@@ -86,17 +86,7 @@
 \DeclareOption{displaytocsubsection}{\displaytocsubsectiontrue}
 \DeclareOption{notocsubsection}{\displaytocsubsectionfalse}
 
-% Shadows
-\newif\ifsharpheader
-\DeclareOption{sharpheader}{\sharpheadertrue}
-\DeclareOption{blurredheader}{\sharpheaderfalse}
-
-% Old (shadow theme based) header
-\newif\ifsplitheader
-\DeclareOption{splitheader}{\splitheadertrue}
-
 \ExecuteOptions{displaysinglefooter} %The default footer is the single coloured footer
-\ExecuteOptions{sharpheader} %The default is to not use the smooth headers, instead to use the sharp-lined header
 
 \beamer@compresstrue
 
@@ -146,133 +136,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Outertheme
-\ifsharpheader
-	\useoutertheme{miniframes}%This has clean lines between portions of the header
-\else
-	\useoutertheme{smoothbars}%This uses the smoothbars header which has colours fading between sections	
-\fi
-
-
-\ifsplitheader
-	\useoutertheme{shadow}%This is the header used in some old versions of the beamer theme.
-	%%%This limits the number of sections displayed in the header to 3.  This prevents the header from taking over the usable space on the slides
-	\makeatletter
-		\newcount\c@p
-		\newcount\c@m
-		\newcount\c@pp
-		\newcount\c@mm	
-	\def\insertsectionnavigation#1{%
-	\hbox to #1{%
-	\vbox{{\usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
-	\vskip0.5625ex%
-	\def\slideentry##1##2##3##4##5##6{}%
-	\def\sectionentry##1##2##3##4##5{%
-		\ifnum##5=\c@part%
-			\def\insertsectionhead{##2}%
-			\def\insertsectionheadnumber{##1}%
-			\def\insertpartheadnumber{##5}%
-			\c@p=\c@section%
-			\c@m=\c@section%
-			\c@pp=\c@section%
-			\c@mm=\c@section%
-			\advance\c@m by -1 %
-			\advance\c@p by 1 %
-			\advance\c@mm by -2 %
-			\advance\c@pp by 2 %
-			%     
-			\ifnum \c@section=1
-				\ifnum\c@section=##1%
-					\setbox\beamer@tempbox=\hbox{%
-						\hyperlink{Navigation##3}{\hbox to #1{%
-							{\hskip0.3cm\usebeamertemplate{section in head/foot}\hskip0.3cm}}}}%
-				\else%
-					\ifnum##1=\c@p%
-						\setbox\beamer@tempbox=\hbox{%
-							\hyperlink{Navigation##3}{\hbox to #1{%
-								{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
-					\else%
-						\ifnum##1=\c@pp%
-							\setbox\beamer@tempbox=\hbox{%
-								\hyperlink{Navigation##3}{\hbox to #1{%
-									{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
-						\else%
-						\fi%
-					\fi%
-				\fi%%  
-			\else%
-				\ifnum \c@section=\beamer@sectionmax
-					\ifnum\c@section=##1%
-						\setbox\beamer@tempbox=\hbox{%
-							\hyperlink{Navigation##3}{\hbox to #1{%
-								{\hskip0.3cm\usebeamertemplate{section in head/foot}\hskip0.3cm}}}}%
-					\else%
-						\ifnum##1=\c@m%
-							\setbox\beamer@tempbox=\hbox{%
-								\hyperlink{Navigation##3}{\hbox to #1{%
-									{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}
-						%
-						\else%
-							\ifnum##1=\c@mm%
-								\setbox\beamer@tempbox=\hbox{%
-									\hyperlink{Navigation##3}{\hbox to #1{%
-										{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
-							%
-							\else%
-							%
-							\fi%
-						\fi%
-					%
-					\fi%%
-				\else%
-					\ifnum\c@section=##1%
-						\setbox\beamer@tempbox=\hbox{%
-							\hyperlink{Navigation##3}{\hbox to #1{%
-								{\hskip0.3cm\usebeamertemplate{section in head/foot}\hskip0.3cm}}}}%
-					\else%
-						\ifnum##1=\c@m%
-							\setbox\beamer@tempbox=\hbox{%
-								\hyperlink{Navigation##3}{\hbox to #1{%
-									{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}
-						\else%
-							\ifnum##1=\c@p%
-								\setbox\beamer@tempbox=\hbox{%
-									\hyperlink{Navigation##3}{\hbox to #1{%
-										{\hskip0.3cm\usebeamertemplate{section in head/foot shaded}\hskip0.3cm}}}}%
-							\else%
-							\fi%
-						\fi%
-					\fi%
-				\fi%
-			\fi%
-		%
-		
-		\ht\beamer@tempbox=1.6875ex%
-		\dp\beamer@tempbox=0.75ex%
-		\box\beamer@tempbox
-		\fi}%
-		\dohead\vskip0.5625ex}}\hfil}}
-	
-	
-	\setbeamertemplate{headline}%{split theme} % full manual adjustment
-	{%
-		\leavevmode%
-		\@tempdimb=3em%
-		\ifdim\@tempdimb>0pt%
-			\advance\@tempdimb by 1.825ex%
-			\begin{beamercolorbox}[wd=.5\paperwidth,ht=\@tempdimb]{section in head/foot}%
-				\vbox to\@tempdimb{\vfil\insertsectionnavigation{.5\paperwidth}\vfil}%
-			\end{beamercolorbox}%
-			\begin{beamercolorbox}[wd=.5\paperwidth,ht=\@tempdimb]{subsection in head/foot}%
-				\vbox to\@tempdimb{\vfil\insertsubsectionnavigation{.5\paperwidth}\vfil}%
-			\end{beamercolorbox}%
-		\fi%
-	}
-	
-		\AtBeginDocument %a hack which ensures the theme will work correctly.  The header doesn't work correctly before the first section of the presentation.
-		{
-			\section*{}
-		}
-\fi
+\useoutertheme{miniframes}%This has clean lines between portions of the header
 
 
 % Footer
