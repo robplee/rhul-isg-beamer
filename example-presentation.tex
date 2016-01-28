@@ -18,7 +18,7 @@ Royal Holloway}
 \end{frame}
 
 \section{Title Page}
-\begin{frame}\frametitle{RHUL Title page}
+\begin{frame}\frametitle{RHUL Title Page}
 \begin{itemize}
 	\item We (the authors of this theme) think that the title page looks better if it has the single colour footer.
 	\item To use this option simply create your title page slide using \texttt{\textbackslash rhultitlepage} (don't put it in a frame).
@@ -27,18 +27,17 @@ Royal Holloway}
 \end{frame}
 
 \section{Table of Contents}
-\begin{frame}\frametitle{Showing progress through the presentation}
+\begin{frame}\frametitle{Showing Progress Through the Presentation}
 \begin{itemize}
 	\item The beamer style is also able to show a table of contents whenever a new section or subsection is begun.
 	\item These options are selected by passing the appropriate parameters when using the ISG theme.
 	\item E.g.\ \texttt{\textbackslash usetheme[displaytocsection]\{ISG\}} or \texttt{\textbackslash usetheme[displaytocsubsection]\{ISG\}}.
-	\item These can be used together with other options in the ISG style, e.g.\ this presentation uses the following\\ {\scriptsize\texttt{\textbackslash usetheme[displaysinglefooter, displaytocsection]\{ISG\}}}
 \end{itemize}
 \end{frame}
 
 \setbeamercovered{invisible}
-\section{Uncovering Slide Content}
-\begin{frame}\frametitle{Invisible Covering}
+\section{Example Slides}
+\begin{frame}\frametitle{Invisible Covering/Uncovering of Content}
 \begin{itemize}
 	\item I'm the first item!
 	\pause
@@ -49,7 +48,7 @@ Royal Holloway}
 \end{frame}
 
 \setbeamercovered{transparent}
-\begin{frame}\frametitle{Transparent covering}
+\begin{frame}\frametitle{Transparent Covering/Uncovering}
 \begin{itemize}
 	\item I'm the first item!
 	\pause
@@ -62,7 +61,7 @@ Royal Holloway}
 \section{One more thing}
 \begin{frame}\frametitle{A quirk of the ISG style}
 \begin{itemize}
-	\item The title page has a few quirks due to the way it has been implemented.
+	\item The title page has a few ``quirks'' due to the way it has been implemented.
 	\item This means that you have to build your .tex file three times before things are in the right place.
 	\item This is less tedious if you use a make file!
 \end{itemize}
