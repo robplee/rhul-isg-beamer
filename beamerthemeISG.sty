@@ -24,6 +24,32 @@
 \newcommand{\TitleOption}[2]{%
 \ifthenelse{\equal{#1}{}}{}{#2}%
 }
+%A command also used on the titlepage to detect the aspect ratio and adjust the logo position accordingly.
+\newcommand\ifratio[3]{%
+\ifnum#1=169%
+    \ifdim\beamer@paperwidth=16.00cm\relax%
+        \ifdim\beamer@paperheight=9.00cm\relax%
+            #2%
+        \else%
+            #3%
+        \fi%
+    \else%
+        #3%
+    \fi%
+\else%
+    \ifnum#1=43%
+        \ifdim\beamer@paperwidth=12.80cm\relax%
+            \ifdim\beamer@paperheight=9.60cm\relax%
+                #2%
+            \else%
+                #3%
+            \fi%
+        \else%
+            #3%
+        \fi%
+    \fi%
+\fi%
+}
 
 
 %%%%%%%%%%%%%%%%%
@@ -112,10 +138,16 @@
 }
 
 \addtobeamertemplate{title page}{%Ideally the shifts would depend on the size of the footer..\footerheight?
+\ifratio{169}{
+\begin{tikzpicture}[remember picture,overlay] 
+	\node [xshift=0cm,yshift=1.275cm] at (current page.south)%place the logo bar just above the footer
+	{\includegraphics[width=\paperwidth]{graphics/beamer-style/titlepagelogo.jpg}};                
+\end{tikzpicture}}%
+{
 \begin{tikzpicture}[remember picture,overlay] 
 	\node [xshift=0cm,yshift=1.075cm] at (current page.south)%place the logo bar just above the footer
 	{\includegraphics[width=\paperwidth]{graphics/beamer-style/titlepagelogo.jpg}};                
-\end{tikzpicture}%
+\end{tikzpicture}}%
 }{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
